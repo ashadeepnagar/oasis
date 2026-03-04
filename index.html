@@ -25,7 +25,9 @@
 
     /* Hero background - moody coffee cinematic feel */
     .hero-bg {
-      background: url('/image/bg3.jpg') center/cover no-repeat;
+      background: url('/image/bg3.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
     /* Premium animated coffee mug 
@@ -81,7 +83,7 @@
     #cart-bar { transition: all 0.4s ease; }
   </style>
 </head>
-<body class="min-h-screen relative">
+<body class="min-h-screen relative text-base sm:text-lg leading-relaxed">
 
   <div class="grain-overlay"></div>
 
@@ -98,9 +100,23 @@
         <a href="#vibe" class="hover:text-amber-400 transition">The Vibe</a>
         <a href="#visit" class="hover:text-amber-400 transition">Visit</a>
       </div>
-      <button id="order-cta" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 px-6 py-3 rounded-full font-semibold shadow-lg transition">
+      <!-- Mobile hamburger button -->
+      <button id="mobile-menu-btn" class="md:hidden text-amber-400 focus:outline-none">
+      <i class="fas fa-bars text-3xl"></i>
+      </button>
+      <!-- Order button (always visible) -->
+      <button id="order-cta" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 px-6 py-3 rounded-full font-semibold shadow-lg transition text-sm sm:text-base">
         Order Now
       </button>
+    </div>
+    <!-- Mobile menu dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#1F1717]/95 backdrop-blur-md border-t border-amber-900/30">
+      <div class="px-4 py-6 flex flex-col gap-6 text-center text-lg">
+        <a href="#home" class="hover:text-amber-400 transition">Home</a>
+        <a href="#menu" class="hover:text-amber-400 transition">Menu</a>
+        <a href="#vibe" class="hover:text-amber-400 transition">The Vibe</a>
+        <a href="#visit" class="hover:text-amber-400 transition">Visit</a>
+      </div>
     </div>
   </nav>
 
@@ -108,7 +124,7 @@
   <section id="home" class="hero-bg min-h-screen flex items-center pt-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
       <div class="space-y-8">
-        <h1 class="text-5xl sm:text-7xl font-bold leading-tight">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
           CKB's Coolest<br>
           <span class="bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent">Caffeine Hideout</span>
         </h1>
@@ -116,7 +132,7 @@
           Obsessed with bold brews, cozy corners, and playlists that hit different. Your daily escape in the heart of CKB.
         </p>
         <div class="flex flex-wrap gap-4">
-          <a href="#menu" class="bg-amber-600 hover:bg-amber-500 px-8 py-4 rounded-xl font-semibold transition">Explore Menu</a>
+          <a href="#menu" class="bg-amber-600 hover:bg-amber-500 px-8 py-5 rounded-xl font-semibold transition text-base sm:text-lg">Explore Menu</a>
           <a href="#visit" class="border border-amber-500/70 hover:bg-amber-500/10 px-8 py-4 rounded-xl font-semibold transition">Find Us</a>
         </div>
       </div>
@@ -224,8 +240,9 @@
   </section>
 
   <!-- Cart Bar -->
-  <div id="cart-bar" class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#1F1717] to-transparent py-4 px-6 z-40 hidden">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 bg-[#2A201E]/90 backdrop-blur-lg p-4 rounded-xl border border-amber-900/30">
+  <div id="cart-bar" class="fixed bottom-0 left-0 right-0 py-4 px-4 sm:px-6 z-40 hidden">
+    <div class="max-w-7xl mx-auto flex flex-col gap-4 bg-[#2A201E]/95 backdrop-blur-lg p-4 sm:p-5 rounded-t-xl border-t-4 border-amber-600">
+      <!-- items + address + total + button -->
       <div id="cart-items" class="text-sm"></div>
       <div class="w-full mt-3">
         <label for="delivery-address" class="block text-sm text-gray-300 mb-1.5">
@@ -261,7 +278,7 @@
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
-      // Ensure it's an internal anchor and not just an empty hash
+      // Ensure it's an internal anchor and not just an empty hash.
       if (href && href.startsWith('#') && href.length > 1) { // Added href.length > 1 to avoid targeting just '#'
         e.preventDefault();
         document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
@@ -352,7 +369,14 @@
     // Re-update cart when user types address (optional but nice)
     if (addressInput) {
     addressInput.addEventListener('input', updateCart);
-    } 
+    }
+    // Mobile menu toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileBtn?.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    });
   }
 </script>
 </body>
