@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Caffeine Oasis</title>
+  <link rel="icon" type="image/logo-done.jpg" href="image/logo-done.jpg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="min-h-screen relative text-base sm:text-lg leading-relaxed">
+
+  <div class="grain-overlay"></div>
+
+  <!-- Navbar – now with correct links -->
+  <nav class="fixed top-0 w-full bg-[#1F1717]/90 backdrop-blur-md z-50 border-b border-amber-900/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-coffee text-3xl text-amber-500"></i>
+        <span class="text-2xl font-bold tracking-tight">Caffeine Oasis</span>
+      </div>
+      
+      <!-- Desktop menu -->
+      <div class="hidden md:flex items-center gap-14">
+        <a href="/" class="hover:text-amber-400 transition">Home</a>
+        <a href="/menu/" class="hover:text-amber-400 transition">Menu</a>
+        <a href="/thevibe/" class="hover:text-amber-400 transition">The Vibe</a>
+        <a href="/visit/" class="hover:text-amber-400 transition">Visit</a>
+        
+      </div>
+
+      <!-- Cart icon -->
+      <button id="cart-toggle" class="relative text-amber-400 hover:text-amber-300 transition focus:outline-none">
+        <i class="fas fa-shopping-cart text-2xl sm:text-3xl"></i>
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+      </button>
+
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-amber-400 focus:outline-none">
+        <i class="fas fa-bars text-3xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#1F1717]/95 backdrop-blur-md border-t border-amber-900/30">
+      <div class="px-4 py-6 flex flex-col gap-6 text-center text-lg">
+        <a href="/" class="hover:text-amber-400 transition">Home</a>
+        <a href="/menu/" class="hover:text-amber-400 transition">Menu</a>
+        <a href="/thevibe/" class="hover:text-amber-400 transition">The Vibe</a>
+        <a href="/visit/" class="hover:text-amber-400 transition">Visit</a>
+        
+      </div>
+    </div>
+  </nav>
+  <!-- Vibe / About -->
+  <section id="vibe" class="py-20 bg-[#1F1717]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-5xl font-bold mb-6 text-amber-400">Not just coffee.<br>A whole mood.</h2>
+        <p class="text-lg text-gray-300 mb-6">Tucked away in Balriya Fatak, Caffeine Oasis is where the city slows down. Exposed brick, dim amber lights, playlists that understand your soul, and brews that hit different.</p>
+        <p class="text-lg text-gray-300">Freelancers coding at 2 AM, friends laughing till closing, solo sippers finding peace — this spot gets you.</p>
+      </div>
+      <img loading="lazy" src="/assets/images/vibe/bg11.jpg" alt="Cozy moody cafe interior with warm lighting" class="rounded-3xl shadow-2xl">
+      <img loading="lazy" src="/assets/images/vibe/bg9.jpg" alt="Cozy moody cafe interior with warm lighting" class="rounded-3xl shadow-2xl">
+      <img loading="lazy" src="/assets/images/vibe/bg1.jpg" alt="Cozy moody cafe interior with warm lighting" class="rounded-3xl shadow-2xl">
+    </div>
+  </section>
+  <!-- Footer (same as home) -->
+  <footer class="py-12 text-center text-gray-500 border-t border-amber-900/20 gap-6">
+    <p>Made with obsession in CKB • © 2026 Caffeine Oasis</p>
+  </footer>
+ 
+</body>
+</html>

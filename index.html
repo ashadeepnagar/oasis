@@ -4,226 +4,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Caffeine Oasis</title>
-  <link rel="icon" type="image/logo-done.jpg" href="image/logo-done.jpg">
+  <link rel="icon" type="image/jpg" href="/assets/images/logo/logo-done.jpg">
+  <link rel="stylesheet" href="/assets/css/main.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    body { font-family: 'Inter', system-ui, sans-serif; background-color: #1F1717; color: white; }
-    h1, h2, h3 { font-family: 'Playfair Display', serif; }
-    
-    /* Grainy texture overlay */
-    .grain-overlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" /><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>') repeat;
-      opacity: 0.04;
-      z-index: -1;
-    }
-
-    /* Hero background - moody coffee cinematic feel */
-    .hero-bg {
-      background: url('/image/bg3.jpg');
-      background-size: cover;
-      background-position: center;
-    }
-
-    /* Premium animated coffee mug 
-    .coffee-mug {
-      width: 280px;
-      height: 300px;
-      background: linear-gradient(145deg, #2C211E, #1A1412);
-      border-radius: 50% 50% 35% 35% / 55% 55% 30% 30%;
-      position: relative;
-      box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9), inset 0 25px 40px rgba(255,255,255,0.08);
-      border: 16px solid #2C211E;
-      border-top-color: #FACC15;
-      animation: float 5s ease-in-out infinite;
-      z-index: 10;
-    }
-
-    .rim { position: absolute; top: -12px; left: 8%; right: 8%; height: 28px; background: linear-gradient(#FDE68A, #FACC15, #EAB308); border-radius: 50%; box-shadow: 0 6px 12px rgba(0,0,0,0.5); }
-
-    .coffee { position: absolute; top: 65px; left: 28px; right: 28px; height: 170px; background: linear-gradient(#3C2F2F, #1F1717); border-radius: 45%; box-shadow: inset 0 20px 30px rgba(0,0,0,0.75); }
-
-    .foam { position: absolute; top: 58px; left: 30px; right: 30px; height: 75px; background: linear-gradient(#FAF0E6, #EDE0D4); border-radius: 50%; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.35); }
-
-    .latte-heart {
-      position: absolute;
-      top: 18px; left: 50%; transform: translateX(-50%);
-      width: 38px; height: 36px;
-      background: #E8B89E;
-      clip-path: polygon(50% 0%, 100% 25%, 85% 70%, 65% 100%, 35% 100%, 15% 70%, 0% 25%);
-    }
-
-    .handle {
-      position: absolute; top: 90px; right: -38px;
-      width: 58px; height: 140px;
-      border: 18px solid #2C211E; border-left: none;
-      border-radius: 0 90px 90px 0;
-      box-shadow: 12px 15px 25px rgba(0,0,0,0.6);
-    }
-
-    .steam { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 130px; }
-    .steam div {
-      position: absolute; background: #F5E8C7; border-radius: 50%; filter: blur(2px);
-      animation: steam 3.8s infinite linear;
-    }
-    .steam div:nth-child(1) { width: 22px; height: 22px; left: 10%; animation-delay: 0s; }
-    .steam div:nth-child(2) { width: 28px; height: 28px; left: 35%; animation-delay: 0.8s; }
-    .steam div:nth-child(3) { width: 18px; height: 18px; left: 52%; animation-delay: 1.5s; }
-    .steam div:nth-child(4) { width: 24px; height: 24px; left: 70%; animation-delay: 0.4s; }
-
-    @keyframes float { 0%,100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-28px) rotate(1.5deg); } }
-    @keyframes steam { 0% { transform: translateY(0) scale(0.4); opacity: 0; } 30% { opacity: 0.9; } 100% { transform: translateY(-200px) scale(1.6); opacity: 0; } }
-
-    /* Cart bar */
-    #cart-bar { transition: all 0.4s ease; }
-  </style>
 </head>
 <body class="min-h-screen relative text-base sm:text-lg leading-relaxed">
 
   <div class="grain-overlay"></div>
 
-  <!-- Navbar -->
+  <!-- Navbar – now with correct links -->
   <nav class="fixed top-0 w-full bg-[#1F1717]/90 backdrop-blur-md z-50 border-b border-amber-900/30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
       <div class="flex items-center gap-3">
         <i class="fas fa-coffee text-3xl text-amber-500"></i>
         <span class="text-2xl font-bold tracking-tight">Caffeine Oasis</span>
       </div>
+      
       <!-- Desktop menu -->
-      <div class="hidden md:flex items-center gap-10">
-        <a href="#home" class="hover:text-amber-400 transition">Home</a>
-        <a href="#menu" class="hover:text-amber-400 transition">Menu</a>
-        <a href="#vibe" class="hover:text-amber-400 transition">The Vibe</a>
-        <a href="#visit" class="hover:text-amber-400 transition">Visit</a>
+      <div class="hidden md:flex items-center gap-14">
+        <a href="/" class="hover:text-amber-400 transition">Home</a>
+        <a href="/menu/" class="hover:text-amber-400 transition">Menu</a>
+        <a href="/thevibe/" class="hover:text-amber-400 transition">The Vibe</a>
+        <a href="/visit/" class="hover:text-amber-400 transition">Visit</a>
+        
       </div>
 
-      <!-- Cart Icon -->
-        <button id="cart-toggle" class="relative text-amber-400 hover:text-amber-300 transition focus:outline-none">
-          <i class="fas fa-shopping-cart text-2xl sm:text-3xl"></i>
-          <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">
-            0
-          </span>
-        </button>
+      <!-- Cart icon -->
+      <button id="cart-toggle" class="relative text-amber-400 hover:text-amber-300 transition focus:outline-none">
+        <i class="fas fa-shopping-cart text-2xl sm:text-3xl"></i>
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+      </button>
 
-      <!-- Mobile hamburger button -->
+      <!-- Mobile menu button -->
       <button id="mobile-menu-btn" class="md:hidden text-amber-400 focus:outline-none">
-      <i class="fas fa-bars text-3xl"></i>
-      </button>  
-    
-      <!-- Mobile menu dropdown -->
-      <div id="mobile-menu" class="hidden md:hidden bg-[#1F1717]/95 backdrop-blur-md border-t border-amber-900/30">
+        <i class="fas fa-bars text-3xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#1F1717]/95 backdrop-blur-md border-t border-amber-900/30">
       <div class="px-4 py-6 flex flex-col gap-6 text-center text-lg">
-        <a href="#home" class="hover:text-amber-400 transition">Home</a>
-        <a href="#menu" class="hover:text-amber-400 transition">Menu</a>
-        <a href="#vibe" class="hover:text-amber-400 transition">The Vibe</a>
-        <a href="#visit" class="hover:text-amber-400 transition">Visit</a>
+        <a href="/" class="hover:text-amber-400 transition">Home</a>
+        <a href="/menu/" class="hover:text-amber-400 transition">Menu</a>
+        <a href="/thevibe/" class="hover:text-amber-400 transition">The Vibe</a>
+        <a href="/visit/" class="hover:text-amber-400 transition">Visit</a>
+        <a href="/cart/" class="hover:text-amber-400 transition">Cart</a>
       </div>
     </div>
   </nav>
-  <!-- Cart Drawer (Flipkart style) -->
-  <div id="cart-drawer" class="fixed inset-0 bg-black/70 z-50 hidden transition-opacity duration-300">
-    <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#1F1717] shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
-      
-      <!-- Header -->
-      <div class="p-5 border-b border-amber-900/40 flex justify-between items-center">
-        <h2 class="text-xl font-bold text-amber-400">Your Cart</h2>
-        <button id="close-cart" class="text-gray-400 hover:text-white text-2xl">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
 
-      <!-- Cart Items -->
-      <div id="drawer-items" class="flex-1 overflow-y-auto p-5 space-y-5">
-        <!-- Dynamic items here -->
-      </div>
-
-      <!-- Summary & Actions -->
-      <div class="p-5 border-t border-amber-900/40 bg-[#2A201E]/80">
-        <!-- Customer Name -->
-        <div class="mb-4">
-          <label for="customer-name" class="block text-sm text-gray-300 mb-1.5">
-            Customer Name <span class="text-amber-400 text-xs">(required for receipt)</span>
-          </label>
-          <input 
-            type="text" 
-            id="customer-name" 
-            placeholder="Enter your name" 
-            class="w-full bg-[#1F1717] border border-amber-900/50 rounded-lg px-4 py-2.5 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-amber-500"
-            required
-          >
-        </div>
-
-        <!-- Delivery Address -->
-        <div class="mb-5">
-          <label for="delivery-address" class="block text-sm text-gray-300 mb-1.5">
-            Delivery Address <span class="text-amber-400 text-xs">(required for delivery)</span>
-          </label>
-          <textarea 
-            id="delivery-address" 
-            rows="3" 
-            placeholder="Full address, landmark, pin code..." 
-            class="w-full bg-[#1F1717] border border-amber-900/50 rounded-lg px-4 py-2.5 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none"
-          ></textarea>
-        </div>
-
-        <!-- Totals -->
-        <div class="space-y-2.5 text-sm mb-5">
-          <div class="flex justify-between text-gray-300">
-            <span>Subtotal:</span>
-            <span id="drawer-subtotal">₹0</span>
-          </div>
-          <div class="flex justify-between text-gray-300">
-            <span>GST (5%):</span>
-            <span id="drawer-gst">₹0</span>
-          </div>
-          <div class="flex justify-between text-xl font-bold pt-3 border-t border-amber-700/50">
-            <span>Total:</span>
-            <span id="drawer-total" class="text-amber-400">₹0</span>
-          </div>
-        </div>
-
-        <!-- Buttons -->
-        <div class="flex flex-col gap-3">
-          <button id="continue-shopping" class="bg-gray-700 hover:bg-gray-600 py-3 rounded-lg font-medium transition">
-            Continue Shopping
-          </button>
-          <button id="print-from-drawer" class="bg-amber-700 hover:bg-amber-600 py-3 rounded-lg font-medium transition">
-            Print Receipt
-          </button>
-          <a id="whatsapp-from-drawer" href="#" target="_blank" 
-             class="bg-green-600 hover:bg-green-500 text-center py-4 rounded-lg font-semibold transition flex items-center justify-center gap-2">
-            <i class="fab fa-whatsapp text-xl"></i> Send Order on WhatsApp
-          </a>
-        </div>
-
-        <!-- Payment QR Placeholder -->
-        <div class="mt-6 text-center">
-          <p class="text-sm text-gray-400 mb-3">Pay via UPI / Cash on Delivery</p>
-          <img 
-            src="image/your-upi-qr.png" 
-            alt="UPI QR Code for Payment" 
-            class="mx-auto w-48 h-48 object-contain rounded-lg border border-amber-700/50 shadow-lg"
-            loading="lazy"
-          >
-          <p class="text-xs text-gray-500 mt-2">Scan to pay (Google Pay, PhonePe, Paytm, etc.)</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hero -->
   <section id="home" class="hero-bg min-h-screen flex items-center pt-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
       <div class="space-y-8">
         <!-- Logo image here -->
         <img 
-          src="image/logo-done.png" 
+          src="/assets/images/logo/logo-done.png" 
           alt="Caffeine Oasis Logo" 
           class="h-16 sm:h-20 md:h-24 w-auto mb-4 md:mb-6"
           loading="lazy">
@@ -231,430 +70,31 @@
           CKB's Coolest<br>
           <span class="bg-gradient-to-r from-black to-gray-900 bg-clip-text text-transparent">Caffeine Hideout</span>
         </h1>
-        <p class="text-xl text-gray-100 max-w-lg">
+        <p class="text-xl text-gray-500 max-w-lg">
           Obsessed with bold brews, cozy corners, and playlists that hit different. Your daily escape in the heart of CKB.
         </p>
         <div class="flex flex-wrap gap-4">
-          <a href="#menu" class="bg-amber-600 hover:bg-amber-500 px-8 py-5 rounded-xl font-semibold transition text-base sm:text-lg">Explore Menu</a>
-          <a href="#visit" class="border border-amber-500/70 hover:bg-amber-500/10 px-8 py-4 rounded-xl font-semibold transition">Find Us</a>
-        </div>
-      </div>
-
-      <!-- Animated Premium Mug -->
-      <div class="flex justify-center md:justify-end">
-        <div class="relative">
-          <div class="coffee-mug">
-            <div class="rim"></div>
-            <div class="coffee"></div>
-            <div class="foam">
-              <div class="latte-heart"></div>
-            </div>
-            <div class="handle"></div>
-          </div>
-          <div class="steam">
-            <div></div><div></div><div></div><div></div>
-          </div>
+          <a href="/menu" class="bg-amber-600 hover:bg-amber-500 px-8 py-5 rounded-xl font-semibold transition text-base sm:text-lg">Explore Menu</a>
+          <a href="/visit" class="border border-amber-500/70 hover:bg-amber-500/10 px-8 py-4 rounded-xl font-semibold transition">Find Us</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Menu Preview -->
-  <section id="menu" class="py-20 bg-[#2A201E]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-5xl font-bold text-center mb-4">Signature Brews</h2>
-      <p class="text-center text-gray-400 mb-12">Handcrafted. Addictive. Yours.</p>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Item 1 -->
-        <div class="bg-[#1F1717] rounded-2x1 overflow-hidden hover:scale-[1.03] transition group glass">
-          <img loading="lazy" src="/image/cold-brew.jpg" alt="Obsession Cold Brew" class="w-full h-48 sm:h-64 md:h-72 lg:h-80 object-cover">
-          <div class="p-6">
-            <h3 class="text-2xl font-semibold mb-2">Obsession Cold Brew</h3>
-            <p class="text-amber-400 text-3xl font-bold mb-2">₹280</p>
-            <p class="text-gray-400">12hr slow-drip. Smooth criminal.</p>
-            <button data-name="Obsession Cold Brew" data-price="280" class="add-to-cart mt-4 w-full bg-amber-700/70 hover:bg-amber-600 px-4 py-2 rounded-lg transition">Add to Cart</button>
-          </div>
-        </div>
-
-        <!-- Item 2 -->
-        <div class="bg-[#1F1717] rounded-2xl overflow-hidden hover:scale-[1.03] transition group glass">
-          <img loading="lazy" src="/image/Caramel-Hazelnut-Latte.jpg" alt="Caramel Hazelnut Latte" class="w-full h-48 sm:h-64 md:h-72 lg:h-80 object-cover">
-          <div class="p-6">
-            <h3 class="text-2xl font-semibold mb-2">Caramel Hazelnut Latte</h3>
-            <p class="text-amber-400 text-3xl font-bold mb-2">₹320</p>
-            <p class="text-gray-400">Nutty. Sweet. Dangerous.</p>
-            <button data-name="Caramel Hazelnut Latte" data-price="320" class="add-to-cart mt-4 w-full bg-amber-700/70 hover:bg-amber-600 px-4 py-2 rounded-lg transition">Add to Cart</button>
-          </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="bg-[#1F1717] rounded-2xl overflow-hidden hover:scale-[1.03] transition group glass">
-          <img loading="lazy" src="/image/Espresso-Tonic.jpg" alt="Espresso Tonic" class="w-full h-48 sm:h-64 md:h-72 lg:h-80 object-cover">
-          <div class="p-6">
-            <h3 class="text-2xl font-semibold mb-2">Espresso Tonic</h3>
-            <p class="text-amber-400 text-3xl font-bold mb-2">₹290</p>
-            <p class="text-gray-400">Bright. Bubbly. Addictive.</p>
-            <button data-name="Espresso Tonic" data-price="290" class="add-to-cart mt-4 w-full bg-amber-700/70 hover:bg-amber-600 px-4 py-2 rounded-lg transition">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Vibe / About -->
-  <section id="vibe" class="py-20 bg-[#1F1717]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <h2 class="text-5xl font-bold mb-6">Not just coffee.<br>A whole mood.</h2>
-        <p class="text-lg text-gray-300 mb-6">Tucked away in Balriya Fatak, Caffeine Oasis is where the city slows down. Exposed brick, dim amber lights, playlists that understand your soul, and brews that hit different.</p>
-        <p class="text-lg text-gray-300">Freelancers coding at 2 AM, friends laughing till closing, solo sippers finding peace — this spot gets you.</p>
-      </div>
-      <img loading="lazy" src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1200" alt="Cozy moody cafe interior with warm lighting" class="rounded-3xl shadow-2xl">
-    </div>
-  </section>
-
-  <!-- Visit Us -->
-  <section id="visit" class="py-20 bg-[#2A201E]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-5xl font-bold mb-8">Come Get Obsessed</h2>
-      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
-        <div class="bg-[#1F1717]/80 p-8 rounded-2xl backdrop-blur-sm">
-          <i class="fas fa-clock text-5xl text-amber-500 mb-4"></i>
-          <p class="text-2xl font-semibold">Every Day</p>
-          <p class="text-xl">8:00 AM – 12:00 AM</p>
-        </div>
-        <div class="bg-[#1F1717]/80 p-8 rounded-2xl backdrop-blur-sm">
-          <i class="fas fa-map-marker-alt text-5xl text-amber-500 mb-4"></i>
-          <p class="text-2xl font-semibold">Location</p>
-          <p class="text-lg">Balriya Fatak, Choru Road, CKB</p>
-        </div>
-        <div class="bg-[#1F1717]/80 p-8 rounded-2xl backdrop-blur-sm">
-          <i class="fab fa-whatsapp text-5xl text-amber-500 mb-4"></i>
-          <p class="text-2xl font-semibold">Chat / Order</p>
-          <p class="text-xl">+91 70622 14305</p>
-        </div>
-      </div>
-
-      <!-- Google Maps placeholder - replace with your actual embed -->
-      <iframe class="w-full h-96 rounded-3xl" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d495.80760886985433!2d76.15402846646624!3d26.046158080665673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1772009857795!5m2!1sen!2sin" 
-        referrerpolicy="no-referrer-when-downgrade" allowfullscreen="" loading="lazy"></iframe>
-    </div>
-  </section>
-
-  <!-- Cart Bar -->
-  <div id="cart-bar" class="fixed bottom-0 left-0 right-0 py-4 px-4 sm:px-6 z-40 hidden">
-    <div class="max-w-7xl mx-auto flex flex-col gap-4 bg-[#2A201E]/95 backdrop-blur-lg p-4 sm:p-5 rounded-t-xl border-t-4 border-amber-600">
-      <!-- items + address + total + button -->
-      <div id="cart-items" class="text-sm max-h-48 overflow-y-auto border-b border-amber-900/40 pb-4 mb-4"></div>
-      <div class="w-full mt-3">
-        <label for="delivery-address" class="block text-sm text-gray-300 mb-1.5">
-        Delivery Address <span class="text-amber-400 text-xs">(required for delivery)</span>
-        </label>
-        <textarea 
-            id="delivery-address" 
-            rows="3" 
-            placeholder="Full address, landmark, pin code, etc." 
-            class="w-full bg-[#1F1717] border border-amber-900/50 rounded-lg px-4 py-2.5 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none"
-        ></textarea>
-        </div>
-      <div class="flex items-center gap-6">
-        <span id="cart-total" class="text-2xl font-bold text-amber-400">₹0</span>
-        <a id="whatsapp-order" href="#" class="bg-green-600 hover:bg-green-500 px-6 py-3 rounded-full font-semibold flex items-center gap-2">
-          <i class="fab fa-whatsapp"></i> Send Order
-        </a>
-      </div>
-      <!-- Summary with GST -->
-      <div class="space-y-2.5 text-sm mb-5">
-      <div class="flex justify-between text-gray-300">
-        <span>Subtotal:</span>
-        <span id="subtotal">₹0</span>
-      </div>
-      <div class="flex justify-between text-gray-300">
-        <span>GST (5%):</span>
-        <span id="gst-amount">₹0</span>
-      </div>
-      <div class="flex justify-between text-lg font-bold pt-2 border-t border-amber-700/50">
-        <span class="text-white">Grand Total:</span>
-        <span id="grand-total" class="text-amber-400">₹0</span>
-      </div>
-      <!-- Print Button Only -->
-      <button id="print-receipt" 
-        class="w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 px-6 py-4 rounded-xl font-semibold text-lg shadow-lg transition flex items-center justify-center gap-3">
-        <i class="fas fa-print text-xl"></i> Print Receipt
-    </button>
-    </div>
-    </div>
-  </div>
-<!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/917062214305?text=Hi%20Caffeine%20Oasis!%20I%20want%20to%20order..." target="_blank" class="fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white p-4 rounded-full shadow-2xl z-50 transition">
-    <i class="fab fa-whatsapp text-3xl"></i>
-  </a>
-
+  <!-- Footer -->
   <footer class="py-12 text-center text-gray-500 border-t border-amber-900/20">
     <p>Made with obsession in CKB • © 2026 Caffeine Oasis</p>
   </footer>
 
-  <script>
-  // Smooth scroll (unchanged)
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      // Ensure it's an internal anchor and not just an empty hash.
-      if (href && href.startsWith('#') && href.length > 1) { // Added href.length > 1 to avoid targeting just '#'
-        e.preventDefault();
-        document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
-      }
-      // If it's just '#' or another type of link, let the default behavior happen
-    });
-  });
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/917062214305?text=Hi%20Caffeine%20Oasis!%20I%20want%20to%20order..." target="_blank" 
+     class="fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white p-4 rounded-full shadow-2xl z-50 transition">
+    <i class="fab fa-whatsapp text-3xl"></i>
+  </a>
 
-  // Cart Logic – safer URL handling
-  let cart = [];
-  const GST_RATE = 0.05;
-
-  // Elements
-    const cartToggle      = document.getElementById('cart-toggle');
-    const cartDrawer      = document.getElementById('cart-drawer');
-    const closeCart       = document.getElementById('close-cart');
-    const continueBtn     = document.getElementById('continue-shopping');
-    const drawerItems     = document.getElementById('drawer-items');
-    const drawerSubtotal  = document.getElementById('drawer-subtotal');
-    const drawerGst       = document.getElementById('drawer-gst');
-    const drawerTotal     = document.getElementById('drawer-total');
-    const whatsappDrawer  = document.getElementById('whatsapp-from-drawer');
-    const printDrawer     = document.getElementById('print-from-drawer');
-    const customerName    = document.getElementById('customer-name');
-    const addressInput    = document.getElementById('delivery-address');
-
-  // Open / Close drawer
-    cartToggle?.addEventListener('click', () => {
-      cartDrawer.classList.remove('hidden');
-      setTimeout(() => cartDrawer.querySelector('.translate-x-full').classList.remove('translate-x-full'), 10);
-    });
-
-  // Close drawer functions
-  function closeDrawer() {
-    const drawerContent = cartDrawer?.querySelector('.translate-x-full, .right-0');
-    if (drawerContent) {
-      drawerContent.classList.add('translate-x-full');
-    }
-    setTimeout(() => {
-      if (cartDrawer) {
-      cartDrawer.classList.add('hidden');
-      }
-    }, 350); // Slightly longer delay to match transition duration
-  }
-
-  // Attach events
-  closeCart?.addEventListener('click', closeDrawer);
-  continueBtn?.addEventListener('click', closeDrawer);
-
-  // Optional: Close when clicking outside the drawer (on overlay)
-  cartDrawer?.addEventListener('click', function(e) {
-    if (e.target === cartDrawer) { // Only if clicked on the semi-transparent overlay
-      closeDrawer();
-    }
-  }); 
-  // Add to cart (with quantity 1 by default)
-    document.querySelectorAll('.add-to-cart').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const name  = btn.dataset.name;
-        const price = Number(btn.dataset.price);
-
-        const existing = cart.find(item => item.name === name);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          cart.push({ name, price, quantity: 1 });
-        }
-
-        updateCartDisplay();
-      });
-    });
-
-    // Quantity + / − / Remove
-    window.changeQuantity = function(index, delta) {
-      if (cart[index]) {
-        cart[index].quantity = Math.max(1, cart[index].quantity + delta);
-        if (cart[index].quantity === 0) {
-          cart.splice(index, 1);
-        }
-        updateCartDisplay();
-      }
-    };
-
-    window.removeFromCart = function(index) {
-      cart.splice(index, 1);
-      updateCartDisplay();
-    };
-
-    // Update display
-    function updateCartDisplay() {
-      // Badge
-      const countEl = document.getElementById('cart-count');
-      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      if (totalItems > 0) {
-        countEl.textContent = totalItems;
-        countEl.classList.remove('hidden');
-      } else {
-        countEl.classList.add('hidden');
-      }
-
-    // Drawer items with quantity controls
-      drawerItems.innerHTML = cart.map((item, i) => `
-        <div class="flex justify-between items-center bg-[#2A201E]/60 p-4 rounded-lg">
-          <div class="flex-1">
-            <div class="font-medium">${item.name}</div>
-            <div class="text-amber-400">₹${item.price} × ${item.quantity}</div>
-          </div>
-          <div class="flex items-center gap-3">
-            <button onclick="changeQuantity(${i}, -1)" class="text-gray-400 hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-gray-700/50">
-              <i class="fas fa-minus"></i>
-            </button>
-            <span class="font-medium w-8 text-center">${item.quantity}</span>
-            <button onclick="changeQuantity(${i}, 1)" class="text-gray-400 hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-gray-700/50">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button onclick="removeFromCart(${i})" class="text-red-400 hover:text-red-300 ml-2">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        </div>
-      `).join('') || '<p class="text-center text-gray-400 py-10">Your cart is empty</p>';  
-
-    // Calculations
-      const subtotal   = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const gstAmount  = subtotal * GST_RATE;
-      const grandTotal = subtotal + gstAmount;
-
-      drawerSubtotal.textContent = `₹${subtotal.toFixed(0)}`;
-      drawerGst.textContent      = `₹${gstAmount.toFixed(0)}`;
-      drawerTotal.textContent    = `₹${grandTotal.toFixed(0)}`;
-
-    // WhatsApp message
-      const name = customerName?.value.trim() || 'Customer';
-      const address = addressInput?.value.trim() || '(not provided)';
-      const orderLines = cart.map(item => `• ${item.name} × ${item.quantity} = ₹${(item.price * item.quantity).toFixed(0)}`);
-      
-      const message = 
-  `Hi Caffeine Oasis!
-
-Order from: ${name}
-
-${orderLines.join('\n')}
-
-Subtotal: ₹${subtotal.toFixed(0)}
-GST (5%): ₹${gstAmount.toFixed(0)}
-Grand Total: ₹${grandTotal.toFixed(0)}
-
-Delivery Address:
-${address}
-
-Pickup or Delivery? Thank you! ☕`;
-    //const message = 
-    //  `Hi Caffeine Oasis!\n\n` +
-    //  `I'd like to place this order:\n` +
-    //  orderLines.join('\n') + `\n\n` +
-    //  `*Total:* ₹${total}\n\n` +
-    //  `Pickup or Delivery? Thank you! ☕`;
-
-    // Properly encode and set href – this is the safe part
-    const encoded = encodeURIComponent(message);
-    whatsappDrawer.href = `https://wa.me/917062214305?text=${encoded}`;
-    }
-
-    // Print Receipt from drawer
-    printDrawer?.addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert("Cart is empty!");
-        return;
-      }
-
-      const subtotal   = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const gstAmount  = subtotal * GST_RATE;
-      const grandTotal = subtotal + gstAmount;
-
-      const name = customerName?.value.trim() || 'Customer';
-      const address = addressInput?.value.trim() || 'Pickup / Not specified';
-
-      const receiptHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Receipt - Caffeine Oasis</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 15mm; font-size: 14px; color: #111; line-height: 1.5; }
-            h1 { text-align: center; color: #D97706; margin-bottom: 8px; font-size: 24px; }
-            .info { text-align: center; font-size: 13px; color: #444; margin-bottom: 20px; }
-            .customer { font-weight: bold; margin: 10px 0; text-align: center; font-size: 16px; }
-            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-            th, td { padding: 8px 0; text-align: left; border-bottom: 1px solid #ddd; }
-            th { font-weight: bold; color: #222; }
-            .total { font-weight: bold; border-top: 2px dashed #999; padding-top: 12px; margin-top: 12px; }
-            .thanks { text-align: center; margin-top: 30px; font-style: italic; color: #555; }
-            @media print { body { margin: 10mm; } }
-          </style>
-        </head>
-        <body onload="window.print(); window.focus();">
-          <h1>Caffeine Oasis</h1>
-          <div class="info">
-            Balriya Fatak, Choru Road, CKB<br>
-            Phone: +91 7062214305<br>
-            ${new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}
-          </div>
-
-          <div class="customer">
-            Customer: ${name}
-          </div>
-
-          <table>
-            <thead>
-              <tr><th>Item</th><th>Qty</th><th class="text-right">Amount</th></tr>
-            </thead>
-            <tbody>
-              ${cart.map(item => `
-                <tr>
-                  <td>${item.name}</td>
-                  <td>${item.quantity}</td>
-                  <td class="text-right">₹${(item.price * item.quantity).toFixed(0)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-
-          <div class="total">
-            <div class="flex justify-between">
-              <span>Subtotal:</span> <span>₹${subtotal.toFixed(0)}</span>
-            </div>
-            <div class="flex justify-between">
-              <span>GST (5%):</span> <span>₹${gstAmount.toFixed(0)}</span>
-            </div>
-            <div class="flex justify-between text-lg mt-3">
-              <span>Grand Total:</span> <span>₹${grandTotal.toFixed(0)}</span>
-            </div>
-          </div>
-
-          ${address !== 'Pickup / Not specified' ? `
-            <p class="mt-5"><strong>Delivery to:</strong><br>${address.replace(/\n/g, '<br>')}</p>
-          ` : ''}
-
-          <p class="thanks mt-8">Thank you, ${name}!<br>Visit us again soon ☕</p>
-        </body>
-        </html>
-      `;
-
-      const printWindow = window.open('', '_blank');
-      if (printWindow) {
-        printWindow.document.write(receiptHTML);
-        printWindow.document.close();
-      } else {
-        alert("Popup blocked! Allow popups to print the receipt.");
-      }
-    });
-
-  // Initial update
-  updateCartDisplay();
-</script>
+  <!-- Shared JavaScript -->
+  <script src="/assets/js/background.js"></script>
+  <script src="/assets/js/script.js"></script>
+  
 </body>
 </html>

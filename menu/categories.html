@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Categories | Caffeine Oasis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    html { scroll-behavior: smooth; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body class="bg-[#1F1717] text-white">
+
+  <nav class="sticky top-0 z-50 bg-[#2A201E]/95 backdrop-blur-md border-b border-amber-900/30">
+    <div class="max-w-7xl mx-auto px-4 flex items-center h-16 gap-4">
+      <a href="index.html" class="text-amber-400 hover:text-amber-300 transition shrink-0"><i class="fas fa-arrow-left"></i> Back</a>
+      <div id="category-nav" class="flex-1 flex gap-6 overflow-x-auto no-scrollbar py-2 text-sm font-medium border-x border-white/5 px-4"></div>
+      <button id="cart-toggle" class="relative text-amber-400 shrink-0">
+        <i class="fas fa-shopping-cart text-2xl"></i>
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- side Cart Drawer (updated buttons flow) -->
+    <div id="cart-drawer" class="fixed inset-0 bg-black/70 z-50 hidden transition-opacity duration-300">
+      <div class="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-[#1F1717] shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">      
+        <div class="p-4 border-b border-amber-900/40 flex justify-between items-center bg-[#1F1717]">
+          <h2 class="text-lg font-bold text-amber-400">Your Cart</h2>
+          <button id="close-cart" class="text-gray-400 hover:text-white text-xl"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div id="drawer-items" class="flex-1 overflow-y-auto p-4 space-y-3 bg-[#181212]">
+          </div>
+        <div class="p-4 border-t border-amber-900/40 bg-[#2A201E]/90">
+        
+        <div class="grid grid-cols-1 gap-2 mb-4">
+          <div>
+            <input type="text" id="customer-name" placeholder="Your Name (Required)" 
+                  class="w-full bg-[#1F1717] border border-amber-900/50 rounded-md px-3 py-2 text-sm text-gray-200 focus:border-amber-500 outline-none">
+          </div>
+          <div>
+            <textarea id="delivery-address" rows="2" placeholder="Delivery Address..." 
+                      class="w-full bg-[#1F1717] border border-amber-900/50 rounded-md px-3 py-2 text-sm text-gray-200 resize-none outline-none"></textarea>
+          </div>
+        </div>
+
+        <div class="space-y-1 text-xs mb-4 px-1">
+          <div class="flex justify-between text-gray-400"><span>Subtotal:</span><span id="drawer-subtotal">₹0</span></div>
+          <div class="flex justify-between text-gray-400"><span>GST (5%):</span><span id="drawer-gst">₹0</span></div>
+          <div class="flex justify-between text-base font-bold pt-2 mt-1 border-t border-amber-700/30 text-white">
+          <span>Total:</span><span id="drawer-total" class="text-amber-400">₹0</span>
+        </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <div class="grid grid-cols-2 gap-2">
+            <button id="continue-shopping" class="bg-gray-700 hover:bg-gray-600 py-2.5 rounded-lg text-xs font-medium transition">Continue</button>
+            <button id="pay-button" class="bg-blue-700 hover:bg-blue-600 py-2.5 rounded-lg text-xs font-medium transition">Make Payment</button>
+          </div>
+        
+        <button id="print-from-drawer" class="bg-amber-700 hover:bg-amber-600 py-2 rounded-lg text-xs font-medium transition hidden">Print Receipt</button>
+        
+        <a id="whatsapp-from-drawer" href="#" target="_blank" 
+           class="bg-green-600 hover:bg-green-500 text-center py-3 rounded-lg text-sm font-bold transition flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp text-lg"></i> Send Order
+        </a>
+        </div>
+              
+        <div class="mt-6 text-center hidden" id="qr-section">
+            <p class="text-sm text-gray-400 mb-3">Scan to Pay (UPI)</p>
+            <img src="/assets/images/qr/your-upi-qr.png" alt="UPI QR Code" class="mx-auto w-48 h-48 object-contain rounded-lg border border-amber-700/50 shadow-lg" loading="lazy">
+            <p class="text-xs text-gray-500 mt-2">After payment → Print Receipt</p>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <main id="category-sections" class="max-w-7xl mx-auto px-4 py-12"></main>
+
+  <footer class="bg-[#2A201E] py-8 text-center text-gray-500 text-sm">
+    <p>&copy; 2026 Caffeine Oasis. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Shared JavaScript -->
+   <script src="/assets/js/script.js"></script> 
+   <script src="/assets/js/more-items.js"></script>
+</body>
+</html>

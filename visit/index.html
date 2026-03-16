@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Caffeine Oasis</title>
+  <link rel="icon" type="image/logo-done.jpg" href="image/logo-done.jpg">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="min-h-screen relative text-base sm:text-lg leading-relaxed">
+
+  <div class="grain-overlay"></div>
+
+  <!-- Navbar – now with correct links -->
+  <nav class="fixed top-0 w-full bg-[#1F1717]/90 backdrop-blur-md z-50 border-b border-amber-900/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-coffee text-3xl text-amber-500"></i>
+        <span class="text-2xl font-bold tracking-tight">Caffeine Oasis</span>
+      </div>
+      
+      <!-- Desktop menu -->
+      <div class="hidden md:flex items-center gap-14">
+        <a href="/" class="hover:text-amber-400 transition">Home</a>
+        <a href="/menu/" class="hover:text-amber-400 transition">Menu</a>
+        <a href="/thevibe/" class="hover:text-amber-400 transition">The Vibe</a>
+        <a href="/visit/" class="hover:text-amber-400 transition">Visit</a>
+        
+      </div>
+
+      <!-- Cart icon -->
+      <button id="cart-toggle" class="relative text-amber-400 hover:text-amber-300 transition focus:outline-none">
+        <i class="fas fa-shopping-cart text-2xl sm:text-3xl"></i>
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+      </button>
+
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-amber-400 focus:outline-none">
+        <i class="fas fa-bars text-3xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#1F1717]/95 backdrop-blur-md border-t border-amber-900/30">
+      <div class="px-4 py-6 flex flex-col gap-6 text-center text-lg">
+        <a href="/" class="hover:text-amber-400 transition">Home</a>
+        <a href="/menu/" class="hover:text-amber-400 transition">Menu</a>
+        <a href="/thevibe/" class="hover:text-amber-400 transition">The Vibe</a>
+        <a href="/visit/" class="hover:text-amber-400 transition">Visit</a>
+        
+      </div>
+    </div>
+  </nav>
+  <!-- Visit Us -->
+  <section id="visit" class="py-20 bg-[#2A201E]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-5xl font-bold mb-8">Come Get Obsessed</h2>
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+        <div class="bg-[#1F1717]/80 p-8 rounded-2xl backdrop-blur-sm">
+          <i class="fas fa-clock text-5xl text-amber-500 mb-4"></i>
+          <p class="text-2xl font-semibold">Every Day</p>
+          <p class="text-xl">8:00 AM – 12:00 AM</p>
+        </div>
+        <div class="bg-[#1F1717]/80 p-8 rounded-2xl backdrop-blur-sm">
+          <i class="fas fa-map-marker-alt text-5xl text-amber-500 mb-4"></i>
+          <p class="text-2xl font-semibold">Location</p>
+          <p class="text-lg">Balriya Fatak, Choru Road, CKB</p>
+        </div>
+        <div class="bg-[#1F1717]/80 p-8 rounded-2xl backdrop-blur-sm">
+          <i class="fab fa-whatsapp text-5xl text-amber-500 mb-4"></i>
+          <p class="text-2xl font-semibold">Chat / Order</p>
+          <p class="text-xl">+91 70622 14305</p>
+        </div>
+      </div>
+
+      <!-- Google Maps placeholder - replace with your actual embed -->
+      <iframe class="w-full h-96 rounded-3xl" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d495.80760886985433!2d76.15402846646624!3d26.046158080665673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1772009857795!5m2!1sen!2sin" 
+        referrerpolicy="no-referrer-when-downgrade" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+  <!-- Footer (same as home) -->
+  <footer class="py-12 text-center text-gray-500 border-t border-amber-900/20">
+    <p>Made with obsession in CKB • © 2026 Caffeine Oasis</p>
+  </footer>
+  
+</body>
+</html>
