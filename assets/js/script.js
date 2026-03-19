@@ -101,7 +101,7 @@ window.removeFromCart = function(index) {
   updateCartDisplay();
 };
 
-// Update cart display (badge + drawer)
+// Update cart display if cart empty then option is disabled (badge + drawer)
 function updateCartDisplay() {
   saveCartToStorage();
   // Cart count badge
@@ -113,6 +113,38 @@ function updateCartDisplay() {
     } else {
       cartCountBadge.classList.add('hidden');
     }
+  }
+  // Disable/Enable WhatsApp button based on cart content if empty then now showing
+  if (whatsappDrawer) {
+    if (cart.length === 0) {
+      whatsappDrawer.classList.add('opacity-50', 'cursor-not-allowed');
+      whatsappDrawer.style.pointerEvents = 'none'; // Optional: makes it unclickable
+    } else {
+      whatsappDrawer.classList.remove('opacity-50', 'cursor-not-allowed');
+      whatsappDrawer.style.pointerEvents = 'auto';
+    }
+  }
+  // Disable/Enable Make Payment button based on cart content if empty then now showing
+  const payBtn = document.getElementById('pay-button'); // The ID we fixed earlier
+  const qrBtn = document.getElementById('qr-section'); // Also targeting the container if needed
+  
+  if (payBtn) {
+    if (cart.length === 0) {
+      // Disable the button
+      payBtn.disabled = true;
+      payBtn.classList.add('opacity-50', 'cursor-not-allowed', 'grayscale');
+      payBtn.innerText = "Cart Empty";
+    } else {
+      // Enable the button
+      payBtn.disabled = false;
+      payBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'grayscale');
+      payBtn.innerText = "Make Payment";
+    }
+  }
+
+  // Hide the QR section automatically if the cart becomes empty
+  if (cart.length === 0 && qrSection) {
+    qrSection.classList.add('hidden');
   }
 
   // Drawer content
@@ -265,7 +297,7 @@ if (printDrawer) {
     }
   });
 }
-// QR event listeners in script.js
+// QR code event listeners in script.js
 const payBtn = document.getElementById('pay-button');
 const qrSection = document.getElementById('qr-section');
 const printBtn = document.getElementById('print-from-drawer');
@@ -281,6 +313,40 @@ if (payBtn && qrSection) {
     }
   });
 }
+// Add Pay via App" script.js
+  const payButton = document.getElementById('pay-button');
+  if (payButton) {
+    payButton.addEventListener('click', function() {
+      const totalAmount = document.getElementById('drawer-total').textContent.replace('₹', '');
+      const upiID = "ashadeep.0093@ybl"; // REPLACE WITH YOUR ACTUAL UPI ID
+      const merchantName = "Caffeine Oasis";
+      
+      // Create the standard UPI Intent string
+      const upiUrl = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(merchantName)}&am=${totalAmount}&cu=INR`;
 
+      // Detect Mobile
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isMobile) {
+          // Show the special "Pay via App" button and trigger it
+          const intentLink = document.getElementById('upi-intent-link');
+        intentLink.href = upiUrl;
+        intentLink.classList.remove('hidden');
+        
+        // Optionally: Auto-open the app chooser immediately
+        window.location.href = upiUrl;
+    } else {
+        // On Desktop, just show the QR Code as we did before
+        const qrSection = document.getElementById('qr-section');
+        if (qrSection) {
+            qrSection.classList.remove('hidden');
+        }
+    }
+    
+    // Show the print button
+    const printBtn = document.getElementById('print-from-drawer');
+    if (printBtn) printBtn.classList.remove('hidden');
+  });
+}
 // Initial cart update on page load
 updateCartDisplay();

@@ -3,22 +3,22 @@
    All pages use this file
    ========================================== */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: #1F1717;
-    color: white;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-  }
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #1F1717;
+  color: white;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
     /* Grainy texture overlay */
   .grain-overlay {
     position: fixed;
