@@ -23,9 +23,9 @@
         { name: "Veggie Supreme", price: 180, img: "/assets/images/burgers/burger.jpg" }
       ]},
       tea: { title: "Tea", accent: "blue", items: [
-        { name: "Mashala", price: 90, img: "/assets/images/tea/mashala.jpg" },
-        { name: "Ice", price: 90, img: "/assets/images/tea/ice-tea.jpg" },
-        { name: "Green", price: 90, img: "/assets/images/tea/green-tea.jpg" }
+        { name: "Mashala", price: 1, img: "/assets/images/tea/mashala.jpg" },
+        { name: "Ice", price: 2, img: "/assets/images/tea/ice-tea.jpg" },
+        { name: "Green", price: 3, img: "/assets/images/tea/green-tea.jpg" }
       ]},
       momos: { title: "Momos", accent: "emerald", items: [
         { name: "Steam", price: 90, img: "/assets/images/momos/steam.jpg" },
