@@ -304,9 +304,11 @@ const printBtn = document.getElementById('print-from-drawer');
 
 if (payBtn && qrSection) {
   payBtn.addEventListener('click', () => {
-    // Show the QR code section
-    qrSection.classList.toggle('hidden');
-    
+    // Show the QR code section only on non-mobile devices
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (!isMobile) {
+      qrSection.classList.toggle('hidden');
+    }
     // Also show the Print Receipt button now that they are paying
     if (printBtn) {
       printBtn.classList.remove('hidden');
@@ -332,9 +334,15 @@ if (payBtn && qrSection) {
           const intentLink = document.getElementById('upi-intent-link');
         intentLink.href = upiUrl;
         intentLink.classList.remove('hidden');
-        
-        // Optionally: Auto-open the app chooser immediately
-        window.location.href = upiUrl;
+        intentLink.target = "_blank";
+        intentLink.click(); // Triggers the UPI app chooser
+        // Automatically send order via WhatsApp after payment intent
+        const whatsappDrawer = document.getElementById('whatsapp-from-drawer');
+        if (whatsappDrawer) {
+          whatsappDrawer.click();
+        }
+        // Optionally: You can keep window.location.href = upiUrl; as a fallback, but it may not work in all browsers
+        // window.location.href = upiUrl;
     } else {
         // On Desktop, just show the QR Code as we did before
         const qrSection = document.getElementById('qr-section');
