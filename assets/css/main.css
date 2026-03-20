@@ -98,6 +98,66 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   /* Cart bar (used in cart/index.html) */
+
+.hot-deal {
+  color: #fff7d6;
+  background: linear-gradient(90deg, #ff9800 0%, #ff5722 100%);
+  box-shadow: 0 4px 24px 0 rgba(255,152,0,0.15), 0 1.5px 0 #fff inset;
+  border-radius: 1.5rem;
+  padding: 0.5em 1.5em;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  animation: pulse-hotdeal 1.2s infinite alternate;
+}
+@keyframes pulse-hotdeal {
+  0% { box-shadow: 0 4px 24px 0 rgba(255,152,0,0.15), 0 1.5px 0 #fff inset; }
+  100% { box-shadow: 0 8px 32px 0 rgba(255,87,34,0.25), 0 2.5px 0 #fff inset; }
+}
+
+.cracker-animated {
+  position: relative;
+  overflow: visible;
+}
+.cracker-spark {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, #fffbe6 60%, #ff9800 100%);
+  border-radius: 50%;
+  position: relative;
+  margin: 0 10px;
+  animation: cracker-sparkle 0.8s infinite alternate;
+}
+.cracker-spark:first-child {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation-delay: 0s;
+}
+.cracker-spark:last-child {
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation-delay: 0.4s;
+}
+@keyframes cracker-sparkle {
+  0% { box-shadow: 0 0 0 0 #ff9800; opacity: 1; }
+  100% { box-shadow: 0 0 16px 8px #fffbe6, 0 0 32px 16px #ff9800; opacity: 0.7; }
+}
+
+
+.title-zoom {
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+.title-zoom:hover,
+.title-zoom:active {
+  transform: scale(1.05);
+}
+
   #cart-bar {
     transition: all 0.4s ease;
   }
