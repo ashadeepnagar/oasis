@@ -320,8 +320,8 @@ if (payBtn && qrSection) {
   if (payButton) {
     payButton.addEventListener('click', function() {
       const totalAmount = document.getElementById('drawer-total').textContent.replace('₹', '');
-      const upiID = "7062214305"; // REPLACE WITH YOUR ACTUAL UPI ID
-      const merchantName = "Caffeine Oasis";
+      const upiID = "ashadeep.0094@ybl"; // REPLACE WITH YOUR ACTUAL UPI ID
+      const merchantName = "Aditya Nagar";
       
       // Create the standard UPI Intent string
       const upiUrl = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(merchantName)}&am=${totalAmount}&cu=INR`;
