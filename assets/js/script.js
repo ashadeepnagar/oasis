@@ -321,7 +321,7 @@ if (payBtn && qrSection) {
     payButton.addEventListener('click', function() {
       const totalAmount = document.getElementById('drawer-total').textContent.replace('₹', '');
       const upiID = "ashadeep.0094@ybl"; // REPLACE WITH YOUR ACTUAL UPI ID
-      const merchantName = "Aditya Nagar";
+      const merchantName = "Caffeine Oasis";
       
       // Create the standard UPI Intent string
       const upiUrl = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(merchantName)}&am=${totalAmount}&cu=INR`;
@@ -341,6 +341,10 @@ if (payBtn && qrSection) {
         if (whatsappDrawer) {
           whatsappDrawer.click();
         }
+        // Empty the cart after sending the order
+        cart = [];
+        saveCartToStorage();
+        updateCartDisplay();
         // Optionally: You can keep window.location.href = upiUrl; as a fallback, but it may not work in all browsers
         // window.location.href = upiUrl;
     } else {
