@@ -1,6 +1,6 @@
 // --- MANAGE YOUR ITEMS HERE ---
     const menuData = {
-      drinks: { title: "Shake", accent: "amber", items: [
+      drinks: { title: "Shake`s", singular: "Shake", accent: "amber", items: [
         { name: "Banana", price: 80, img: "/assets/images/shakes/banana.jpg" },
         { name: "Chocolate", price: 100, img: "/assets/images/shakes/chocolate.jpg" },
         { name: "Cold-Coffee", price: 50, img: "/assets/images/shakes/cold-coffee.jpg" },
@@ -8,7 +8,7 @@
         { name: "Mango", price: 90, img: "/assets/images/shakes/mango.jpg" },
         { name: "Oreo", price: 110, img: "/assets/images/shakes/oreo.jpg" }
       ]},
-      pizza: { title: "Pizza", accent: "red", items: [
+      pizzas: { title: "Pizza`s", singular: "Pizza", accent: "red", items: [
         { name: "Margherita", price: 350, img: "/assets/images/pizza/margherita.jpg" },
         { name: "Farmhouse", price: 420, img: "/assets/images/pizza/farm-h.jpg" },
         { name: "Spice-Paneer", price: 220, img: "/assets/images/pizza/spice-paneer.jpg" },
@@ -19,15 +19,18 @@
         { name: "Cheese-Brust", price: 520, img: "/assets/images/pizza/c-brust.jpg" },
         { name: "Achari-do-Pyaza", price: 220, img: "/assets/images/pizza/achari-do-pyaza.jpg" }
       ]},
-      burgers: { title: "Burger", accent: "orange", items: [
-        { name: "Veggie Supreme", price: 180, img: "/assets/images/burgers/burger.jpg" }
+      burgers: { title: "Burger`s", singular: "Burger", accent: "orange", items: [
+        { name: "Aloo-Tikki", price: 80, img: "/assets/images/burgers/aloo-tikki.jpg" },
+        { name: "Cheese", price: 90, img: "/assets/images/burgers/cheese.jpg" },
+        { name: "Double-Tikki", price: 120, img: "/assets/images/burgers/double-tikki.jpg" },
+        { name: "Jambo", price: 150, img: "/assets/images/burgers/jambo.jpg" }
       ]},
-      tea: { title: "Tea", accent: "blue", items: [
+      teas: { title: "Tea`s", singular: "Tea", accent: "blue", items: [
         { name: "Mashala", price: 1, img: "/assets/images/tea/mashala.jpg" },
         { name: "Ice", price: 2, img: "/assets/images/tea/ice-tea.jpg" },
         { name: "Green", price: 3, img: "/assets/images/tea/green-tea.jpg" }
       ]},
-      momos: { title: "Momos", accent: "emerald", items: [
+      momos: { title: "Momo`s", singular: "Momo", accent: "emerald", items: [
         { name: "Steam", price: 90, img: "/assets/images/momos/steam.jpg" },
         { name: "Fry", price: 110, img: "/assets/images/momos/fry.jpg" }
       ] }
@@ -61,7 +64,7 @@
       <section id="${key}" class="mb-20 pt-10 border-t border-white/5 first:border-t-0">
         <div class="flex items-center gap-4 mb-8">
           <div class="h-1 w-12 bg-${cat.accent}-500 rounded-full"></div>
-          <h2 class="text-3xl font-bold tracking-tight">${cat.title}</h2>
+          <h2 class="text-3xl font-bold tracking-tight title-zoom">${cat.title}</h2>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           ${itemsHtml || '<p class="text-gray-500 italic">Coming soon...</p>'}
@@ -75,7 +78,10 @@
       const name = btn.getAttribute('data-name');
       const price = Number(btn.getAttribute('data-price'));
       const category = btn.getAttribute('data-category');
-      const displayName = `${name}-${category}`;
+      // Find the singular form for the category
+      let singular = category;
+      if (category.endsWith('`s')) singular = category.slice(0, -2);
+      const displayName = `${name}-${singular}`;
 
       // This logic mirrors your index.html/menu.js logic
       const existing = cart.find(item => item.name === displayName);
