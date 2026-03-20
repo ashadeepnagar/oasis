@@ -6,6 +6,7 @@
   <title>All Categories | Caffeine Oasis</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="/assets/css/main.css">
   <style>
     html { scroll-behavior: smooth; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -15,8 +16,8 @@
 
   <nav class="sticky top-0 z-50 bg-[#2A201E]/95 backdrop-blur-md border-b border-amber-900/30">
     <div class="max-w-7xl mx-auto px-4 flex items-center h-16 gap-4">
-      <a href="index.html" class="text-amber-400 hover:text-amber-300 transition shrink-0"><i class="fas fa-arrow-left"></i> Back</a>
-      <div id="category-nav" class="flex-1 flex gap-6 overflow-x-auto no-scrollbar py-2 text-sm font-medium border-x border-white/5 px-4"></div>
+      <a href="index.html" class="text-amber-400 hover:text-amber-300 transition shrink-0 text-lg"><i class="fas fa-arrow-left"></i> Back</a>
+      <div id="category-nav" class="flex-1 flex gap-6 overflow-x-auto no-scrollbar py-2 text-md font-medium border-x border-white/5 px-4"></div>
       <button id="cart-toggle" class="relative text-amber-400 shrink-0">
         <i class="fas fa-shopping-cart text-2xl"></i>
         <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
@@ -28,7 +29,7 @@
     <div id="cart-drawer" class="fixed inset-0 bg-black/70 z-50 hidden transition-opacity duration-300">
       <div class="absolute right-0 top-0 bottom-0 w-full max-w-sm bg-[#1F1717] shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">      
         <div class="p-4 border-b border-amber-900/40 flex justify-between items-center bg-[#1F1717]">
-          <h2 class="text-lg font-bold text-amber-400">Your Cart</h2>
+          <h2 class="text-lg font-bold text-amber-400 title-zoom">Your Cart</h2>
           <button id="close-cart" class="text-gray-400 hover:text-white text-xl"><i class="fas fa-times"></i></button>
         </div>
 
