@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caffeine Oasis - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        body { background: linear-gradient(135deg, #1F1717 0%, #2A201E 100%); }
+        .glass { backdrop-filter: blur(10px); background: rgba(31, 23, 23, 0.8); }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-[#1F1717] border-b border-amber-900/30 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-coffee text-3xl text-amber-500"></i>
+                <div>
+                    <h1 class="text-2xl font-bold">Caffeine Oasis</h1>
+                    <p class="text-xs text-amber-400">Admin Dashboard</p>
+                </div>
+            </div>
+            <button id="logout-btn" class="bg-red-700 hover:bg-red-600 px-6 py-2 rounded-lg font-medium transition">
+                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Stats Cards -->
+        <div class="grid md:grid-cols-4 gap-4 mb-8">
+            <div class="glass p-6 rounded-lg border border-amber-900/30">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Total Orders</p>
+                        <p class="text-3xl font-bold text-amber-400" id="total-orders">0</p>
+                    </div>
+                    <i class="fas fa-shopping-bag text-4xl text-amber-500/30"></i>
+                </div>
+            </div>
+            <div class="glass p-6 rounded-lg border border-amber-900/30">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Pending Orders</p>
+                        <p class="text-3xl font-bold text-yellow-400" id="pending-orders">0</p>
+                    </div>
+                    <i class="fas fa-hourglass-half text-4xl text-yellow-500/30"></i>
+                </div>
+            </div>
+            <div class="glass p-6 rounded-lg border border-amber-900/30">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Completed Orders</p>
+                        <p class="text-3xl font-bold text-green-400" id="completed-orders">0</p>
+                    </div>
+                    <i class="fas fa-check-circle text-4xl text-green-500/30"></i>
+                </div>
+            </div>
+            <div class="glass p-6 rounded-lg border border-amber-900/30">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Total Revenue</p>
+                        <p class="text-3xl font-bold text-blue-400" id="total-revenue">₹0</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <i class="fas fa-rupee-sign text-4xl text-blue-500/30"></i>
+                        <button id="revenue-toggle" class="text-gray-400 hover:text-blue-400 transition" title="Toggle Revenue Visibility">
+                            <i class="fas fa-eye text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-4 mb-6 border-b border-amber-900/30">
+            <button id="tab-pending" class="tab-btn px-6 py-3 text-amber-400 border-b-2 border-amber-400 font-semibold">
+                <i class="fas fa-clock mr-2"></i>Pending Orders
+            </button>
+            <button id="tab-all" class="tab-btn px-6 py-3 text-gray-400 border-b-2 border-transparent font-semibold hover:text-amber-400">
+                <i class="fas fa-list mr-2"></i>All Orders
+            </button>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="glass p-6 rounded-lg border border-amber-900/30 overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-amber-900/30">
+                        <th class="px-4 py-3 text-left text-amber-400 font-semibold">Order ID</th>
+                        <th class="px-4 py-3 text-left text-amber-400 font-semibold">Customer</th>
+                        <th class="px-4 py-3 text-left text-amber-400 font-semibold">Items</th>
+                        <th class="px-4 py-3 text-left text-amber-400 font-semibold">Amount</th>
+                        <th class="px-4 py-3 text-left text-amber-400 font-semibold">Status</th>
+                        <th class="px-4 py-3 text-left text-amber-400 font-semibold">Ordered At</th>
+                        <th class="px-4 py-3 text-left text-amber-400 font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-tbody">
+                    <tr>
+                        <td class="px-4 py-3 text-center text-gray-400" colspan="7">
+                            <i class="fas fa-spinner fa-spin mr-2"></i>Loading orders...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="confirm-modal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center">
+        <div class="bg-[#1F1717] rounded-lg p-6 max-w-sm border border-amber-900/30">
+            <h3 class="text-xl font-bold mb-4" id="modal-title">Confirm Action</h3>
+            <p class="text-gray-300 mb-6" id="modal-message">Are you sure?</p>
+            <div class="flex gap-3 justify-end">
+                <button id="modal-cancel" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium transition">
+                    Cancel
+                </button>
+                <button id="modal-confirm" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="details-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center overflow-y-auto">
+        <div class="bg-[#1F1717] rounded-lg p-8 max-w-lg w-full mx-4 border border-amber-900/30 my-8">
+            <h3 class="text-2xl font-bold mb-6">Order Details</h3>
+            <div class="space-y-4" id="details-content">
+                <!-- Order details will be populated here -->
+            </div>
+            <button id="details-close" class="mt-6 w-full px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium transition">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script src="/admin/dashboard.js"></script>
+</body>
+</html>

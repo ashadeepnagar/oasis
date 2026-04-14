@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caffeine Oasis - Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        body { background: linear-gradient(135deg, #1F1717 0%, #2A201E 100%); }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full px-6">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <i class="fas fa-coffee text-6xl text-amber-500 mb-4"></i>
+            <h1 class="text-4xl font-bold">Caffeine Oasis</h1>
+            <p class="text-gray-400 mt-2">Admin Portal</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="bg-[#1F1717] border border-amber-900/30 rounded-xl p-8 backdrop-filter backdrop-blur-lg">
+            <h2 class="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Admin Code</label>
+                    <input 
+                        type="password" 
+                        id="admin-code" 
+                        placeholder="Enter admin code" 
+                        class="w-full bg-[#2A201E] border border-amber-900/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-amber-400 transition"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 py-3 rounded-lg font-bold text-white transition flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+
+            <div class="mt-4 p-3 bg-blue-900/20 border border-blue-900/50 rounded-lg">
+                <p class="text-xs text-gray-400">
+                    <strong>Demo Code:</strong> admin123<br>
+                    <span class="text-gray-500">Replace with your secure code in production</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <p class="text-center text-gray-500 text-xs mt-8">
+            Only authorized users can access the admin dashboard
+        </p>
+    </div>
+
+    <script>
+        // Check if already logged in
+        if (localStorage.getItem('admin_authenticated')) {
+            window.location.href = '/admin/index.html';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const adminCode = document.getElementById('admin-code').value;
+            
+            // Simple authentication (in production, use backend authentication!)
+            const ADMIN_CODE = 'P@$$w0rd4all'; // Change this to your secure code
+            
+            if (adminCode === ADMIN_CODE) {
+                localStorage.setItem('admin_authenticated', 'true');
+                alert('Login successful!');
+                window.location.href = '/admin/index.html';
+            } else {
+                alert('Invalid admin code!');
+                document.getElementById('admin-code').value = '';
+                document.getElementById('admin-code').focus();
+            }
+        });
+    </script>
+</body>
+</html>

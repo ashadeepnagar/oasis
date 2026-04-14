@@ -32,6 +32,8 @@ if (mobileMenuBtn && mobileMenu) {
 let cart = JSON.parse(localStorage.getItem('caffeine_oasis_cart')) || [];
 //let cart = [];
 const GST_RATE = 0.05;
+let currentOrderId = null; // Store order ID after saving to DB
+let isProcessingPayment = false; // Prevent multiple payment submissions
 
 // Create a helper function to save the cart whenever it changes
 function saveCartToStorage() {
@@ -207,6 +209,85 @@ Pickup or Delivery? Thank you! ☕`;
   }
 }
 
+// Backend API call to save order in DB when clicking
+async function saveOrderToDB() {
+    // Get customer name (required)
+    const name = customerName?.value.trim();
+    if (!name) {
+        alert("Please enter your name!");
+        return false;
+    }
+
+    // Calculate totals
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const gstAmount = subtotal * GST_RATE;
+    const total = subtotal + gstAmount;
+
+    // Get items list for database
+    const items = cart.map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price
+    }));
+
+    const orderData = {
+        name: name,
+        items: items,
+        total: total
+    };
+
+    try {
+        const response = await fetch('http://192.168.31.208:3000/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            console.log("Order saved to database with PENDING status:", result.order);
+            currentOrderId = result.orderId; // Store order ID globally
+            alert("Order saved! Status: PENDING (awaiting payment)");
+            return true;
+        } else if (result.error) {
+            // Handle duplicate order error from backend
+            alert("❌ " + result.error);
+            return false;
+        } else {
+            alert("Error saving order: Unknown error");
+            return false;
+        }
+    } catch (error) {
+        console.error("Error saving order:", error);
+        alert("Error connecting to server: " + error.message);
+        return false;
+    }
+}
+
+// Function to mark order as COMPLETED after successful payment
+async function markOrderAsCompleted(orderId) {
+    if (!orderId) {
+        console.warn("No order ID to mark as completed");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://192.168.31.208:3000/api/orders/${orderId}/complete`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            console.log("Order status updated to COMPLETED:", result.order);
+            alert("Order status updated to COMPLETED!");
+        } else {
+            console.error("Failed to update order status:", result.error);
+        }
+    } catch (error) {
+        console.error("Error updating order status:", error);
+    }
+}
 // Print Receipt (from drawer)
 if (printDrawer) {
   printDrawer.addEventListener('click', () => {
@@ -318,9 +399,34 @@ if (payBtn && qrSection) {
 // Add Pay via App" script.js
   const payButton = document.getElementById('pay-button');
   if (payButton) {
-    payButton.addEventListener('click', function() {
+    payButton.addEventListener('click', async function() {
+      // Prevent multiple clicks - check if already processing
+      if (isProcessingPayment) {
+        alert("Payment is already being processed. Please wait...");
+        return;
+      }
+
+      // Disable button and show loading state
+      isProcessingPayment = true;
+      payButton.disabled = true;
+      payButton.classList.add('opacity-50', 'cursor-not-allowed');
+      const originalText = payButton.textContent;
+      payButton.textContent = "Processing...";
+
+      // First, save the order to database
+      const orderSaved = await saveOrderToDB();
+      
+      if (!orderSaved) {
+        // Re-enable button if order saving failed
+        isProcessingPayment = false;
+        payButton.disabled = false;
+        payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        payButton.textContent = originalText;
+        return;
+      }
+
       const totalAmount = document.getElementById('drawer-total').textContent.replace('₹', '');
-      const upiID = "00000@ybl"; // REPLACE WITH YOUR ACTUAL UPI ID
+      const upiID = "ashadeep.0094@ybl"; // REPLACE WITH YOUR ACTUAL UPI ID
       const merchantName = "Caffeine Oasis";
       
       // Create the standard UPI Intent string
@@ -336,23 +442,59 @@ if (payBtn && qrSection) {
         intentLink.classList.remove('hidden');
         intentLink.target = "_blank";
         intentLink.click(); // Triggers the UPI app chooser
-        // Automatically send order via WhatsApp after payment intent
-        const whatsappDrawer = document.getElementById('whatsapp-from-drawer');
-        if (whatsappDrawer) {
-          whatsappDrawer.click();
-        }
-        // Empty the cart after sending the order
-        cart = [];
-        saveCartToStorage();
-        updateCartDisplay();
-        // Optionally: You can keep window.location.href = upiUrl; as a fallback, but it may not work in all browsers
-        // window.location.href = upiUrl;
+        
+        // Show success message - order is PENDING
+        setTimeout(() => {
+          alert(`✅ Order #${currentOrderId} placed successfully!\n\nStatus: PENDING\nOur admin will verify your payment and mark it as COMPLETED.\n\nOrder Details sent to WhatsApp.`);
+          
+          // Automatically send order via WhatsApp after payment intent
+          const whatsappDrawer = document.getElementById('whatsapp-from-drawer');
+          if (whatsappDrawer) {
+            whatsappDrawer.click();
+          }
+          
+          // Empty the cart after sending the order
+          cart = [];
+          currentOrderId = null; // Reset order ID
+          saveCartToStorage();
+          updateCartDisplay();
+          
+          // Reset payment processing flag
+          isProcessingPayment = false;
+          payButton.disabled = false;
+          payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+          payButton.textContent = "Make Payment";
+          
+          // Close cart drawer
+          closeDrawer();
+        }, 1000);
+        
     } else {
-        // On Desktop, just show the QR Code as we did before
+        // On Desktop, show the QR Code
         const qrSection = document.getElementById('qr-section');
         if (qrSection) {
             qrSection.classList.remove('hidden');
         }
+        
+        // Show success message - order is PENDING
+        setTimeout(() => {
+          alert(`✅ Order #${currentOrderId} placed successfully!\n\nStatus: PENDING\nScan the QR code above to pay.\n\nOur admin will verify payment and mark it as COMPLETED.`);
+          
+          // Empty the cart after showing message
+          cart = [];
+          currentOrderId = null; // Reset order ID
+          saveCartToStorage();
+          updateCartDisplay();
+          
+          // Reset payment processing flag
+          isProcessingPayment = false;
+          payButton.disabled = false;
+          payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+          payButton.textContent = "Make Payment";
+          
+          // Close cart drawer
+          closeDrawer();
+        }, 1000);
     }
     
     // Show the print button
