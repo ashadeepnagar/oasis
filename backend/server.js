@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 // Database Connection Settings
 const pool = new Pool({
   user: 'cafe_admin',         // Your default postgres user
-  host: '192.168.31.208',
-  database: 'cafe_db',
+  host: 'db.acuwlrdatgpuilpnskpd.supabase.co',
+  database: 'cafe_db01',
   password: 'P@$$w0rd4all', // Your actual DB password
   port: 5432,
 });
