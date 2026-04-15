@@ -272,7 +272,7 @@ async function markOrderAsCompleted(orderId) {
     }
 
     try {
-        const response = await fetch(`http://192.168.31.208:3000/api/orders/${orderId}/complete`, {
+        const response = await fetch(`/api/orders/${orderId}/complete`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' }
         });
