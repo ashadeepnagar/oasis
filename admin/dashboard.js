@@ -1,6 +1,6 @@
 // Admin Dashboard JavaScript
 
-const API_BASE = 'http://192.168.31.208:3000/api';
+const API_BASE = '/api/orders';
 let currentView = 'pending'; // 'pending' or 'all'
 let allOrders = [];
 let pendingOrders = [];
