@@ -102,7 +102,8 @@ function toggleRevenueVisibility(hide = null) {
 // Fetch Pending Orders
 async function loadPendingOrders() {
     try {
-        const response = await fetch(`${API_BASE}/orders/pending`);
+        // Change the URL to use the query parameter 'type=pending'
+        const response = await fetch('/api/orders?type=pending');
         const data = await response.json();
 
         if (data.success) {
@@ -120,7 +121,8 @@ async function loadPendingOrders() {
 // Fetch All Orders
 async function loadAllOrders() {
     try {
-        const response = await fetch(`${API_BASE}/orders/all`);
+        // Change the URL to use the query parameter 'type=all'
+        const response = await fetch('/api/orders?type=all');
         const data = await response.json();
 
         if (data.success) {
