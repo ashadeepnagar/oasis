@@ -1,22 +1,38 @@
-import { sql } from '@vercel/postgres';
+import { neon } from '@neondatabase/serverless';
 
 export default async function handler(req, res) {
-  try {
-    // This is the simplest query to test if the DB connection is alive
-    const result = await sql`SELECT NOW();`;
-    
-    return res.status(200).json({ 
-      success: true, 
-      message: "Database connected!", 
-      time: result.rows[0] 
-    });
-  } catch (error) {
-    // This will help you see the error in the browser instead of just a crash
-    console.error("Database Error:", error);
-    return res.status(500).json({ 
-      success: false, 
-      error: error.message,
-      hint: "Check if your Environment Variables are set in Vercel Settings."
-    });
+  // Use the automatically injected Vercel environment variable
+  const sql = neon(process.env.POSTGRES_URL);
+
+  if (req.method === 'POST') {
+    const { name, items, total } = req.body;
+
+    try {
+      // Create table if missing
+      await sql`
+        CREATE TABLE IF NOT EXISTS orders (
+          id SERIAL PRIMARY KEY,
+          customer_name TEXT,
+          items JSONB,
+          total_price INT,
+          status TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
+      // Insert order
+      const result = await sql`
+        INSERT INTO orders (customer_name, items, total_price, status)
+        VALUES (${name}, ${JSON.stringify(items)}, ${total}, 'PENDING')
+        RETURNING id;
+      `;
+
+      return res.status(200).json({ success: true, orderId: result[0].id });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: err.message });
+    }
   }
+
+  return res.status(405).json({ error: "Method not allowed" });
 }
