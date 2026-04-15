@@ -3,23 +3,38 @@ import { neon } from '@neondatabase/serverless';
 export default async function handler(req, res) {
   const sql = neon(process.env.POSTGRES_URL);
 
-  // 1. GET REQUESTS (For the Dashboard)
-  if (req.method === 'GET') {
-    const { type } = req.query; // 'pending' or 'all'
+  // --- 1. HANDLE UPDATES (PUT) ---
+  if (req.method === 'PUT') {
+    const { id, action } = req.query; 
     try {
       let result;
-      if (type === 'pending') {
-        result = await sql`SELECT * FROM orders WHERE status = 'PENDING' ORDER BY created_at DESC`;
-      } else {
-        result = await sql`SELECT * FROM orders ORDER BY created_at DESC`;
+      if (action === 'complete') {
+        result = await sql`UPDATE orders SET status = 'COMPLETED', payment_completed_at = NOW() WHERE id = ${id} RETURNING *`;
+      } else if (action === 'cancel') {
+        result = await sql`UPDATE orders SET status = 'CANCELLED' WHERE id = ${id} RETURNING *`;
       }
-      return res.status(200).json({ success: true, orders: result });
+      return res.status(200).json({ success: true, order: result[0] });
     } catch (err) {
       return res.status(500).json({ error: err.message });
     }
   }
 
-  // 2. POST REQUESTS (From the Menu/Cart)
+  // --- 2. HANDLE FETCHING (GET) ---
+  if (req.method === 'GET') {
+    const { type } = req.query;
+    try {
+      // We ALIAS the columns here to match dashboard.js expectations
+      const query = type === 'pending' 
+        ? await sql`SELECT id, customer_name, items, total_price, status, created_at FROM orders WHERE status = 'PENDING' ORDER BY created_at DESC`
+        : await sql`SELECT id, customer_name, items, total_price, status, created_at FROM orders ORDER BY created_at DESC`;
+      
+      return res.status(200).json({ success: true, orders: query });
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+
+  // --- 3. HANDLE CREATION (POST) ---
   if (req.method === 'POST') {
     const { name, items, total } = req.body;
     try {
