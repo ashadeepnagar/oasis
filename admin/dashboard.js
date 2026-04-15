@@ -278,7 +278,8 @@ function closeDetailsModal() {
 function completeOrder(orderId) {
     confirmAction = async () => {
         try {
-            const response = await fetch(`${API_BASE}/orders/${orderId}/complete`, {
+            // Updated URL to match Vercel Query Params
+            const response = await fetch(`/api/orders?id=${orderId}&action=complete`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -287,18 +288,17 @@ function completeOrder(orderId) {
             if (data.success) {
                 alert('Order marked as COMPLETED!');
                 loadPendingOrders();
-                loadAllOrders();
+                if (currentView === 'all') loadAllOrders();
             }
         } catch (error) {
             console.error('Error completing order:', error);
-            alert('Error: ' + error.message);
         }
         closeConfirmModal();
     };
 
-    const order = pendingOrders.find(o => o.id === orderId);
+    const order = pendingOrders.find(o => o.id === orderId) || allOrders.find(o => o.id === orderId);
     document.getElementById('modal-title').textContent = 'Confirm Order';
-    document.getElementById('modal-message').textContent = `Mark order #${orderId} (${order.customer_name}) as COMPLETED?`;
+    document.getElementById('modal-message').textContent = `Mark order #${orderId} as COMPLETED?`;
     document.getElementById('confirm-modal').classList.remove('hidden');
 }
 
@@ -306,7 +306,8 @@ function completeOrder(orderId) {
 function cancelOrder(orderId) {
     confirmAction = async () => {
         try {
-            const response = await fetch(`${API_BASE}/orders/${orderId}/cancel`, {
+            // Updated URL to match Vercel Query Params
+            const response = await fetch(`/api/orders?id=${orderId}&action=cancel`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -315,18 +316,16 @@ function cancelOrder(orderId) {
             if (data.success) {
                 alert('Order CANCELLED!');
                 loadPendingOrders();
-                loadAllOrders();
+                if (currentView === 'all') loadAllOrders();
             }
         } catch (error) {
             console.error('Error cancelling order:', error);
-            alert('Error: ' + error.message);
         }
         closeConfirmModal();
     };
 
-    const order = pendingOrders.find(o => o.id === orderId);
     document.getElementById('modal-title').textContent = 'Cancel Order';
-    document.getElementById('modal-message').textContent = `Cancel order #${orderId} (${order.customer_name})?`;
+    document.getElementById('modal-message').textContent = `Are you sure you want to cancel order #${orderId}?`;
     document.getElementById('confirm-modal').classList.remove('hidden');
 }
 
