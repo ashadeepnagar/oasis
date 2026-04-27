@@ -428,46 +428,65 @@ if (payBtn && qrSection) {
       const totalAmount = document.getElementById('drawer-total').textContent.replace('₹', '');
       const upiID = "ashadeep.0094@ybl"; // REPLACE WITH YOUR ACTUAL UPI ID
       const merchantName = "Caffeine Oasis";
+      const orderId = currentOrderId || Math.random().toString(36).substring(7);
+      const transactionRef = `CO-${Date.now()}`; // Unique transaction reference
       
-      // Create the standard UPI Intent string
-      const upiUrl = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(merchantName)}&am=${totalAmount}&cu=INR`;
+      // Create the standard UPI Intent string with all required parameters
+      // pa=UPI ID, pn=merchant name, am=amount, tn=transaction note, tr=transaction reference, cu=currency
+      const upiUrl = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(merchantName)}&am=${totalAmount}&tn=${encodeURIComponent(`Order#${orderId}`)}&tr=${transactionRef}&cu=INR`;
 
       // Detect Mobile
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
       if (isMobile) {
-          // Show the special "Pay via App" button and trigger it
-          const intentLink = document.getElementById('upi-intent-link');
-        intentLink.href = upiUrl;
-        intentLink.classList.remove('hidden');
-        intentLink.target = "_blank";
-        intentLink.click(); // Triggers the UPI app chooser
+        // Show payment instruction modal before opening UPI
+        const paymentInstruction = `📲 Payment Platform Opening...\n\n✅ Your Order #${orderId} is saved!\n\nAmount: ₹${totalAmount}\n\n⏳ Please wait... UPI app is opening.\n\nIf no app opens:\n1. Manually open your UPI app\n2. Transfer ₹${totalAmount} to Caffeine Oasis\n3. Send screenshot to WhatsApp`;
         
-        // Show success message - order is PENDING
+        alert(paymentInstruction);
+        
+        // Trigger the UPI app
+        const intentLink = document.getElementById('upi-intent-link');
+        if (intentLink) {
+          intentLink.href = upiUrl;
+          intentLink.target = "_blank";
+          intentLink.click();
+        }
+        
+        // Show confirmation message - DO NOT close drawer yet
         setTimeout(() => {
-          alert(`✅ Order #${currentOrderId} placed successfully!\n\nStatus: PENDING\nOur admin will verify your payment and mark it as COMPLETED.\n\nOrder Details sent to WhatsApp.`);
+          const confirmPayment = confirm(`✅ Did you complete the payment?\n\nOrder: #${orderId}\nAmount: ₹${totalAmount}\n\nClick OK if payment is done, Cancel to try again.`);
           
-          // Automatically send order via WhatsApp after payment intent
-          const whatsappDrawer = document.getElementById('whatsapp-from-drawer');
-          if (whatsappDrawer) {
-            whatsappDrawer.click();
+          if (confirmPayment) {
+            // Payment confirmed - now send WhatsApp and clear cart
+            alert("Thanks! Your order is being processed.\n\nCheck WhatsApp for Order Details.");
+            
+            // Send order via WhatsApp
+            const whatsappDrawer = document.getElementById('whatsapp-from-drawer');
+            if (whatsappDrawer) {
+              whatsappDrawer.click();
+            }
+            
+            // Clear cart only AFTER payment confirmation
+            setTimeout(() => {
+              cart = [];
+              currentOrderId = null;
+              saveCartToStorage();
+              updateCartDisplay();
+              isProcessingPayment = false;
+              payButton.disabled = false;
+              payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+              payButton.textContent = "Make Payment";
+              closeDrawer();
+            }, 1500);
+          } else {
+            // User chose to try again
+            alert("No problem! Your order #" + orderId + " is still saved.\n\nPlease complete the payment and try again.");
+            isProcessingPayment = false;
+            payButton.disabled = false;
+            payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            payButton.textContent = "Make Payment";
           }
-          
-          // Empty the cart after sending the order
-          cart = [];
-          currentOrderId = null; // Reset order ID
-          saveCartToStorage();
-          updateCartDisplay();
-          
-          // Reset payment processing flag
-          isProcessingPayment = false;
-          payButton.disabled = false;
-          payButton.classList.remove('opacity-50', 'cursor-not-allowed');
-          payButton.textContent = "Make Payment";
-          
-          // Close cart drawer
-          closeDrawer();
-        }, 1000);
+        }, 2000);
         
     } else {
         // On Desktop, show the QR Code
@@ -476,30 +495,18 @@ if (payBtn && qrSection) {
             qrSection.classList.remove('hidden');
         }
         
-        // Show success message - order is PENDING
-        setTimeout(() => {
-          alert(`✅ Order #${currentOrderId} placed successfully!\n\nStatus: PENDING\nScan the QR code above to pay.\n\nOur admin will verify payment and mark it as COMPLETED.`);
-          
-          // Empty the cart after showing message
-          cart = [];
-          currentOrderId = null; // Reset order ID
-          saveCartToStorage();
-          updateCartDisplay();
-          
-          // Reset payment processing flag
-          isProcessingPayment = false;
-          payButton.disabled = false;
-          payButton.classList.remove('opacity-50', 'cursor-not-allowed');
-          payButton.textContent = "Make Payment";
-          
-          // Close cart drawer
-          closeDrawer();
-        }, 1000);
+        alert(`✅ Order #${orderId} placed!\n\nStatus: PENDING\n\nAmount: ₹${totalAmount}\n\nScan the QR code in the cart to pay.\n\nOur admin will verify your payment.`);
+        
+        // Enable print button for desktop users to print receipt while paying
+        const printBtn = document.getElementById('print-from-drawer');
+        if (printBtn) printBtn.classList.remove('hidden');
+        
+        // Reset button state
+        isProcessingPayment = false;
+        payButton.disabled = false;
+        payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        payButton.textContent = "Make Payment";
     }
-    
-    // Show the print button
-    const printBtn = document.getElementById('print-from-drawer');
-    if (printBtn) printBtn.classList.remove('hidden');
   });
 }
 // Initial cart update on page load
